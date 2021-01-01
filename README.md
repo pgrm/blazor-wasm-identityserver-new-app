@@ -41,4 +41,5 @@ To install additional .NET runtimes or SDKs:
 ```
 $> heroku container:login
 $> heroku container:push web --app YOUR_APP_NAME
+$> heroku container:release web --app YOUR_APP_NAME
 ```
