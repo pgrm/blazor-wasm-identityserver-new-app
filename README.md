@@ -35,3 +35,10 @@ Host (useful for support):
 To install additional .NET runtimes or SDKs:
   https://aka.ms/dotnet-download
 ```
+
+## Deploy to heroku:
+
+```
+$> heroku container:login
+$> heroku container:push web --app YOUR_APP_NAME
+```
