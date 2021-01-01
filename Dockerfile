@@ -10,4 +10,6 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=build-env /app/Server/out .
-ENTRYPOINT ["dotnet", "Server.dll"]
+
+CMD ASPNETCORE_URLS=http://+:$PORT dotnet blazor-wasm-identityserver-new-app.Server.dll
+

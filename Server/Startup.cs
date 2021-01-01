@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using blazor_wasm_identityserver_new_app.Server.Data;
 using blazor_wasm_identityserver_new_app.Server.Models;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace blazor_wasm_identityserver_new_app.Server
 {
@@ -32,7 +33,7 @@ namespace blazor_wasm_identityserver_new_app.Server
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -43,6 +44,13 @@ namespace blazor_wasm_identityserver_new_app.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+                options.ForwardedHeaders = ForwardedHeaders.All;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +65,7 @@ namespace blazor_wasm_identityserver_new_app.Server
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseForwardedHeaders();
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
